@@ -8,7 +8,7 @@ void SONAR_setup() {
   pinMode(SONAR_TRIGGER_PIN, OUTPUT);
   pinMode(SONAR_ECHO_PIN, INPUT);
   
-  Serial.println("SONAR configured.");
+  Serial.println("Sonar configured.");
 }
 
 int _SONAR_readValue() {
