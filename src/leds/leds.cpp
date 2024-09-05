@@ -1,7 +1,25 @@
+#include <Arduino.h>
+
 // LED pins
 #define STATUS_LED 2
 #define FRONT_LED 3
 #define REAR_LED 4
+
+void LED_turnOnLights() {
+  digitalWrite(FRONT_LED, HIGH);
+  digitalWrite(REAR_LED, HIGH);
+}
+
+void LED_turnOffLights() {
+  digitalWrite(FRONT_LED, LOW);
+  digitalWrite(REAR_LED, LOW);
+}
+
+void LED_blinkStatusLed() {
+  digitalWrite(STATUS_LED, HIGH);
+  delay(200);
+  digitalWrite(STATUS_LED, LOW);
+}
 
 void LED_setup() {
   pinMode(STATUS_LED, OUTPUT);
@@ -17,20 +35,4 @@ void LED_setup() {
   LED_turnOffLights();
 
   Serial.println("LEDs configured.");
-}
-
-void LED_blinkStatusLed() {
-  digitalWrite(STATUS_LED, HIGH);
-  delay(200);
-  digitalWrite(STATUS_LED, LOW);
-}
-
-void LED_turnOnLights() {
-  digitalWrite(FRONT_LED, HIGH);
-  digitalWrite(REAR_LED, HIGH);
-}
-
-void LED_turnOffLights() {
-  digitalWrite(FRONT_LED, LOW);
-  digitalWrite(REAR_LED, LOW);
 }

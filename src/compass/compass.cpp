@@ -2,6 +2,7 @@
 // https://electronoobs.com/eng_arduino_tut77.php
 // https://arduino.stackexchange.com/a/57297/92010
 
+#include <Arduino.h>
 #include <Wire.h>
 
 static int _COMPASS_address = 0x1E; //0011110b, I2C 7bit address of HMC5883

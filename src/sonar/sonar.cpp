@@ -1,5 +1,6 @@
 // Docs
 // https://howtomechatronics.com/tutorials/arduino/ultrasonic-sensor-hc-sr04/
+#include <Arduino.h>
 
 #define SONAR_TRIGGER_PIN 47
 #define SONAR_ECHO_PIN 46

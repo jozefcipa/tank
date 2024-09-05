@@ -2,8 +2,13 @@
 * Bluetooth controlled Tank vehicle
 **/
 
+#include <Arduino.h>
 #include <Wire.h>
-#include "thermometer.h"
+#include "leds/leds.h"
+#include "sonar/sonar.h"
+#include "compass/compass.h"
+#include "thermometer/thermometer.h"
+#include "bluetooth/bluetooth.h"
 
 void setup() {
   // Configure console
@@ -41,7 +46,7 @@ void loop() {
   Serial.println("%");
   Serial.println("-----------------");
 
-  String response = _BLUETOOTH_read();
+  String response = BLUETOOTH_read();
 
   if (response != "") {
     Serial.println("Response from bluetooth");

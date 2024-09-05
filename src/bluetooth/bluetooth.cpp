@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <SoftwareSerial.h>
 
 #define _BLUETOOTH_RX 11
@@ -11,7 +12,7 @@ void BLUETOOTH_setup() {
   Serial.println("Bluetooth configured.");
 }
 
-String _BLUETOOTH_read() {
+String BLUETOOTH_read() {
   char data;
   String response = "";
 

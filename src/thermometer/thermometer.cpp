@@ -3,6 +3,7 @@
 
 #include <SensirionI2cSht4x.h>
 #include <Wire.h>
+#include "thermometer.h"
 
 static SensirionI2cSht4x _THERMOMETER_sensor;
 
