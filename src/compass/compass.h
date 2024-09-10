@@ -1,2 +1,2 @@
 void COMPASS_setup();
-float COMPASS_read();
+int COMPASS_read();

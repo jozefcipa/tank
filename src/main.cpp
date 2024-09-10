@@ -1,14 +1,15 @@
 /**
 * Bluetooth controlled Tank vehicle
 **/
-
 #include <Arduino.h>
 #include <Wire.h>
+#include<string.h>
 #include "leds/leds.h"
 #include "sonar/sonar.h"
 #include "compass/compass.h"
 #include "thermometer/thermometer.h"
 #include "bluetooth/bluetooth.h"
+#include "tank/tank.h"
 
 void setup() {
   // Configure console
@@ -30,39 +31,62 @@ void setup() {
   Serial.println("Tank initialization is complete.");
 }
 
+void handleLEDLights(char *cmdVal) {
+  if (strcmp(cmdVal, "ON") == 0) {
+    Serial.print("[Lights]: Turning LEDs ON");
+    LED_turnOnLights();
+    Serial.print("[Lights]: Turning LEDs OFF");
+  } else if (strcmp(cmdVal, "OFF") == 0) {
+    LED_turnOffLights();
+  } else {
+    Serial.print("[Lights]: Unknown command: ");
+    Serial.println(cmdVal);
+  }
+}
+
+void handleSensors(char *cmdVal) {
+  if (strcmp(cmdVal, "READ") == 0) {
+    Serial.print("[Sensors]: Reading sensor values");
+
+    int distance = SONAR_readDistance();
+    int compass = COMPASS_read();
+    struct TemperatureHumidity temp = THERMOMETER_read();
+
+    char *sensorValues;
+    sprintf(sensorValues, "sensors=sonar:%d|compass:%d|temperature:%.2f|humidity:%.2f", distance, compass, temp.temperature, temp.humidity);
+
+    Serial.print("[Sensors]: Sending sensor values: ");
+    Serial.println(sensorValues);
+    BLUETOOTH_send(sensorValues);
+  } else {
+    Serial.print("[Sensors]: Unknown command: ");
+    Serial.println(cmdVal);
+  }
+}
+
 void loop() {
-  Serial.print("Distance: ");
-  Serial.print(SONAR_readDistance());
-  Serial.println("cm");
-  Serial.print("Compass: ");
-  Serial.print(COMPASS_read());
-  Serial.println("°");
-  Serial.print("Temperature: ");
-  struct TemperatureHumidity temp;
-  temp = THERMOMETER_read();
-  Serial.print(temp.temperature);
-  Serial.print("°C Humidity: ");
-  Serial.print(temp.humidity);
-  Serial.println("%");
-  Serial.println("-----------------");
+  LED_blinkStatusLed();
 
-  String response = BLUETOOTH_read();
-
-  if (response != "") {
-    Serial.println("Response from bluetooth");
-    Serial.println(response);
-
-    if (response.equals("on")) {
-     LED_turnOnLights();
-    } else if (response.equals("off")) {
-      LED_turnOffLights();
-    } else {
-      Serial.println("Unknown command: " + response);
-    }
-
-    BLUETOOTH_send("OK");
+  char *message = BLUETOOTH_read();
+  if (strcmp(message, "") == 0) {
+    delay(1000); // TODO: decrease
+    return;
   }
 
-  delay(1000);
-  LED_blinkStatusLed();
+  Serial.println("[Bluetooth]: Received message: ");
+  Serial.println(message);
+
+  TankCommand command = TANK_parseMessage(message);
+
+  // handle lights
+  if (strcmp(command.lights, "") != 0) {
+    handleLEDLights(command.lights);
+  }
+
+  // handle sensors data
+  if (strcmp(command.sensors, "") != 0) {
+    handleSensors(command.sensors);
+  }
+
+  // TODO handle motors
 }

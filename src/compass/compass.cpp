@@ -17,7 +17,7 @@ void COMPASS_setup(){
   Serial.println("Compass configured.");
 }
 
-float COMPASS_read(){
+int COMPASS_read(){
   int x, y, z;
 
   //Tell the HMC5883 where to begin reading data
@@ -37,5 +37,5 @@ float COMPASS_read(){
   }
 
   // TODO: figure out what exactly is being returned and how to use that value
-  return atan2(y, x) * 180 / M_PI;
+  return (int) (atan2(y, x) * 180 / M_PI);
 }

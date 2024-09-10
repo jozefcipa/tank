@@ -1,3 +1,3 @@
 void BLUETOOTH_setup();
-String BLUETOOTH_read();
+char* BLUETOOTH_read();
 void BLUETOOTH_send(const char *msg);

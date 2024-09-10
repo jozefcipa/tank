@@ -12,9 +12,9 @@ void BLUETOOTH_setup() {
   Serial.println("Bluetooth configured.");
 }
 
-String BLUETOOTH_read() {
+char* BLUETOOTH_read() {
   char data;
-  String response = "";
+  char *response = "";
 
   while (_BLUETOOTH_client.available() > 0) {
     data = _BLUETOOTH_client.read();
@@ -23,7 +23,6 @@ String BLUETOOTH_read() {
     delay(5); // TODO: do we actually need to wait at all?
   }
 
-  response.trim();
   return response;
 }
 
