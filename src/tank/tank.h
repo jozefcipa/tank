@@ -1,7 +1,8 @@
-struct TankCommand {
-  char *lights;
-  char *sensors;
-};
+namespace tank {
+  struct Command {
+    char *lights;
+    char *sensors;
+  };
 
-struct TankCommand TANK_parseMessage(char *msgStr);
-
+  struct Command parseMessage(char *msgStr);
+}

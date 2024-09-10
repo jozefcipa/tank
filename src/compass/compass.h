@@ -1,2 +1,4 @@
-void COMPASS_setup();
-int COMPASS_read();
+namespace compass {
+  void setup();
+  int read();
+}

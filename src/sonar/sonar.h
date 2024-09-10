@@ -1,2 +1,4 @@
-void SONAR_setup();
-int SONAR_readDistance();
+namespace sonar {
+  void setup();
+  int readDistance();
+}

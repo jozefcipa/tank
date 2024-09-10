@@ -1,3 +1,5 @@
-void BLUETOOTH_setup();
-char* BLUETOOTH_read();
-void BLUETOOTH_send(const char *msg);
+namespace bluetooth {
+  void setup();
+  char* read();
+  void send(const char *msg);
+}

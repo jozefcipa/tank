@@ -1,31 +1,32 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-#define _BLUETOOTH_RX 11
-#define _BLUETOOTH_TX 10
+namespace bluetooth {
+  const int BLUETOOTH_RX = 11;
+  const int BLUETOOTH_TX = 10;
+  SoftwareSerial btClient(BLUETOOTH_TX, BLUETOOTH_RX);
 
-SoftwareSerial _BLUETOOTH_client(_BLUETOOTH_TX, _BLUETOOTH_RX);
+  void setup() {
+    btClient.begin(9600);
 
-void BLUETOOTH_setup() {
-  _BLUETOOTH_client.begin(9600);
-
-  Serial.println("Bluetooth configured.");
-}
-
-char* BLUETOOTH_read() {
-  char data;
-  char *response = "";
-
-  while (_BLUETOOTH_client.available() > 0) {
-    data = _BLUETOOTH_client.read();
-
-    response += data;
-    delay(5); // TODO: do we actually need to wait at all?
+    Serial.println("Bluetooth configured.");
   }
 
-  return response;
-}
+  char* read() {
+    char data;
+    char *response = "";
 
-void BLUETOOTH_send(const char *msg) {
-  _BLUETOOTH_client.write(msg);
+    while (btClient.available() > 0) {
+      data = btClient.read();
+
+      response += data;
+      delay(5); // TODO: do we actually need to wait at all?
+    }
+
+    return response;
+  }
+
+  void send(const char *msg) {
+    btClient.write(msg);
+  }
 }

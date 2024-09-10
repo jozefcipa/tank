@@ -17,16 +17,16 @@ void setup() {
   Serial.println("Tank initializing...");
 
   // Setup peripheries
-  LED_setup();
-  SONAR_setup();
+  led::setup();
+  sonar::setup();
 
   // Initialize I2C communication
   Wire.begin();
-  COMPASS_setup();
-  THERMOMETER_setup();
+  compass::setup();
+  temp::setup();
 
   // Initialize bluetooth at the end, when everything is ready
-  BLUETOOTH_setup();
+  bluetooth::setup();
 
   Serial.println("Tank initialization is complete.");
 }
@@ -34,10 +34,10 @@ void setup() {
 void handleLEDLights(char *cmdVal) {
   if (strcmp(cmdVal, "ON") == 0) {
     Serial.print("[Lights]: Turning LEDs ON");
-    LED_turnOnLights();
+    led::turnOnLights();
     Serial.print("[Lights]: Turning LEDs OFF");
   } else if (strcmp(cmdVal, "OFF") == 0) {
-    LED_turnOffLights();
+    led::turnOffLights();
   } else {
     Serial.print("[Lights]: Unknown command: ");
     Serial.println(cmdVal);
@@ -48,16 +48,16 @@ void handleSensors(char *cmdVal) {
   if (strcmp(cmdVal, "READ") == 0) {
     Serial.print("[Sensors]: Reading sensor values");
 
-    int distance = SONAR_readDistance();
-    int compass = COMPASS_read();
-    struct TemperatureHumidity temp = THERMOMETER_read();
+    int sonarDistance = sonar::readDistance();
+    int compassPosition = compass::read();
+    struct temp::TemperatureHumidity tempHumidity = temp::read();
 
     char *sensorValues;
-    sprintf(sensorValues, "sensors=sonar:%d|compass:%d|temperature:%.2f|humidity:%.2f|lights:%s", distance, compass, temp.temperature, temp.humidity, LIGHTS_TURNED_ON ? "ON" : "OFF");
+    sprintf(sensorValues, "sensors=sonar:%d|compass:%d|temperature:%.2f|humidity:%.2f|lights:%s", sonarDistance, compassPosition, tempHumidity.temperature, tempHumidity.humidity, led::lightsTurnedOn ? "ON" : "OFF");
 
     Serial.print("[Sensors]: Sending sensor values: ");
     Serial.println(sensorValues);
-    BLUETOOTH_send(sensorValues);
+    bluetooth::send(sensorValues);
   } else {
     Serial.print("[Sensors]: Unknown command: ");
     Serial.println(cmdVal);
@@ -65,9 +65,9 @@ void handleSensors(char *cmdVal) {
 }
 
 void loop() {
-  LED_blinkStatusLed();
+  led::blinkStatusLed();
 
-  char *message = BLUETOOTH_read();
+  char *message = bluetooth::read();
   if (strcmp(message, "") == 0) {
     delay(1000); // TODO: decrease
     return;
@@ -76,7 +76,7 @@ void loop() {
   Serial.println("[Bluetooth]: Received message: ");
   Serial.println(message);
 
-  TankCommand command = TANK_parseMessage(message);
+  tank::Command command = tank::parseMessage(message);
 
   // handle lights
   if (strcmp(command.lights, "") != 0) {

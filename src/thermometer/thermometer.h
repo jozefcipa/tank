@@ -1,7 +1,9 @@
-struct TemperatureHumidity {
-  float temperature;
-  float humidity;
-};
+namespace temp {
+  struct TemperatureHumidity {
+    float temperature;
+    float humidity;
+  };
 
-void THERMOMETER_setup();
-struct TemperatureHumidity THERMOMETER_read();
+  void setup();
+  struct TemperatureHumidity read();
+}

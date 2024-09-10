@@ -5,41 +5,42 @@
 #include <Wire.h>
 #include "thermometer.h"
 
-static SensirionI2cSht4x _THERMOMETER_sensor;
+namespace temp {
+    SensirionI2cSht4x sensor;
+    char errorMessage[64];
+    int16_t error;
+    
+    void setup() {
+        sensor.begin(Wire, SHT40_I2C_ADDR_44);
+        sensor.softReset();
+        delay(10);
 
-static char errorMessage[64];
-static int16_t error;
+        uint32_t serialNumber = 0;
+        error = sensor.serialNumber(serialNumber);
+        if (error != 0) {
+            Serial.print("Error trying to execute serialNumber(): ");
+            errorToString(error, errorMessage, sizeof errorMessage);
+            Serial.println(errorMessage);
+            return;
+        }
 
-void THERMOMETER_setup() {
-  _THERMOMETER_sensor.begin(Wire, SHT40_I2C_ADDR_44);
-  _THERMOMETER_sensor.softReset();
-  delay(10);
-
-  uint32_t serialNumber = 0;
-  error = _THERMOMETER_sensor.serialNumber(serialNumber);
-  if (error != 0) {
-      Serial.print("Error trying to execute serialNumber(): ");
-      errorToString(error, errorMessage, sizeof errorMessage);
-      Serial.println(errorMessage);
-      return;
-  }
-
-  Serial.print("Thermometer configured (Serial Number: ");
-  Serial.print(serialNumber);
-  Serial.println(")");
-}
-
-struct TemperatureHumidity THERMOMETER_read() {
-    struct TemperatureHumidity data;
-    data.temperature = 0.0;
-    data.humidity = 0.0;
-
-    error = _THERMOMETER_sensor.measureLowestPrecision(data.temperature, data.humidity);
-    if (error != 0) {
-        Serial.print("[Thermometer]: Error trying to execute measureLowestPrecision(): ");
-        errorToString(error, errorMessage, sizeof errorMessage);
-        Serial.println(errorMessage);
+        Serial.print("Thermometer configured (Serial Number: ");
+        Serial.print(serialNumber);
+        Serial.println(")");
     }
 
-    return data;
+    struct TemperatureHumidity read() {
+        struct TemperatureHumidity data;
+        data.temperature = 0.0;
+        data.humidity = 0.0;
+
+        error = sensor.measureLowestPrecision(data.temperature, data.humidity);
+        if (error != 0) {
+            Serial.print("[Thermometer]: Error trying to execute measureLowestPrecision(): ");
+            errorToString(error, errorMessage, sizeof errorMessage);
+            Serial.println(errorMessage);
+        }
+
+        return data;
+    }
 }

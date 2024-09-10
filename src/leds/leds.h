@@ -1,5 +1,7 @@
-void LED_setup();
-void LED_blinkStatusLed();
-void LED_turnOnLights();
-void LED_turnOffLights();
-extern bool LIGHTS_TURNED_ON;
+namespace led {
+  void setup();
+  void blinkStatusLed();
+  void turnOnLights();
+  void turnOffLights();
+  extern bool lightsTurnedOn;
+}
