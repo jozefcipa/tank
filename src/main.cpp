@@ -53,7 +53,7 @@ void handleSensors(char *cmdVal) {
     struct TemperatureHumidity temp = THERMOMETER_read();
 
     char *sensorValues;
-    sprintf(sensorValues, "sensors=sonar:%d|compass:%d|temperature:%.2f|humidity:%.2f", distance, compass, temp.temperature, temp.humidity);
+    sprintf(sensorValues, "sensors=sonar:%d|compass:%d|temperature:%.2f|humidity:%.2f|lights:%s", distance, compass, temp.temperature, temp.humidity, LIGHTS_TURNED_ON ? "ON" : "OFF");
 
     Serial.print("[Sensors]: Sending sensor values: ");
     Serial.println(sensorValues);

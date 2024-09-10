@@ -5,14 +5,18 @@
 #define FRONT_LED 3
 #define REAR_LED 4
 
+bool LIGHTS_TURNED_ON = false;
+
 void LED_turnOnLights() {
   digitalWrite(FRONT_LED, HIGH);
   digitalWrite(REAR_LED, HIGH);
+  LIGHTS_TURNED_ON = true;
 }
 
 void LED_turnOffLights() {
   digitalWrite(FRONT_LED, LOW);
   digitalWrite(REAR_LED, LOW);
+  LIGHTS_TURNED_ON = false;
 }
 
 void LED_blinkStatusLed() {
