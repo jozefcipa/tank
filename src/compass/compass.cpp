@@ -1,6 +1,7 @@
 // Docs
 // https://electronoobs.com/eng_arduino_tut77.php
 // https://arduino.stackexchange.com/a/57297/92010
+// https://navody.dratek.cz/navody-k-produktum/arduino-kompas-hmc5883l.html
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -37,7 +38,17 @@ namespace compass {
       y |= Wire.read(); //Y lsb
     }
 
-    // TODO: figure out what exactly is being returned and how to use that value
-    return (int) (atan2(y, x) * 180 / M_PI);
+    float angle = atan2(y, x);
+    
+    if (angle < 0) {
+      angle += 2 * PI;
+    }
+
+    if(angle  > 2 * PI) {
+      angle -= 2 * PI;
+    }
+
+    // convert radians to degrees
+    return (int) (angle * 180 / M_PI);
   }
 }
