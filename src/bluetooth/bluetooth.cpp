@@ -2,9 +2,9 @@
 #include <SoftwareSerial.h>
 
 namespace bluetooth {
-  const int BLUETOOTH_RX = 11;
-  const int BLUETOOTH_TX = 10;
-  SoftwareSerial btClient(BLUETOOTH_TX, BLUETOOTH_RX);
+  const int BLUETOOTH_RX = 10;
+  const int BLUETOOTH_TX = 11;
+  SoftwareSerial btClient(BLUETOOTH_RX, BLUETOOTH_TX);
 
   void setup() {
     btClient.begin(9600);
@@ -12,18 +12,17 @@ namespace bluetooth {
     Serial.println("Bluetooth configured.");
   }
 
-  char* read() {
-    char data;
-    char *response = "";
+  String read() {
+    String message = "";
 
     while (btClient.available() > 0) {
-      data = btClient.read();
-
-      response += data;
+      message += (char) btClient.read();
       delay(5); // TODO: do we actually need to wait at all?
     }
 
-    return response;
+    message.trim();
+
+    return message;
   }
 
   void send(const char *msg) {

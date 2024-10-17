@@ -16,11 +16,11 @@ namespace tank {
 
       // Compare the key and assign the value to the correct field
       if (strcmp(key, "lights") == 0) {
-        strcpy(command.lights, value);
+        command.lights = value;
       } else if (strcmp(key, "sensors") == 0) {
-        strcpy(command.sensors, value);
-      } else if (false) {
-        // TODO: implement others
+        command.sensors = value;
+      } else if (strcmp(key, "motors") == 0) {
+        command.motors = value;
       } else {
         Serial.print("[WARN]: Unknown key-value pair: ");
         Serial.print(key);

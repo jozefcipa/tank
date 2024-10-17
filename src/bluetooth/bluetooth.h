@@ -1,5 +1,5 @@
 namespace bluetooth {
   void setup();
-  char* read();
+  String read();
   void send(const char *msg);
 }
