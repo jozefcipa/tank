@@ -1,8 +1,10 @@
 #include <Arduino.h>
+#include <stdbool.h>
+
 namespace led {
-  const int STATUS_LED = 2;
-  const int FRONT_LED = 3;
-  const int REAR_LED = 4;
+  const int STATUS_LED = 9;
+  const int FRONT_LED = 40;
+  const int REAR_LED = 41;
   bool lightsTurnedOn = false;
 
   void turnOnLights() {
