@@ -40,6 +40,16 @@ void handleMotors(char *cmdVal) {
   Serial.println(cmdVal);
 
   // TODO: implement motors
+
+  // if (strlen(cmdVal) != 6) { // e.g. LF:RF\0
+  //   Serial.print("[motors]: Unknown command: ");
+  //   Serial.println(cmdVal);
+  //   return;
+  // }
+
+  // // move motors, cmdVal format is e.g. "LF:RF"
+  // motors::move(cmdVal[0], cmdVal[1]);
+  // motors::move(cmdVal[3], cmdVal[4]);
 }
 
 void handleLEDLights(char *cmdVal) {
@@ -80,8 +90,6 @@ void handleSensors(char *cmdVal) {
       humidity,
       led::lightsTurnedOn ? "ON" : "OFF"
     );
-    Serial.print("length of sprintf string");
-    Serial.println(strlen(sensorValues));
     
     Serial.print("[Sensors]: Sending sensor values: ");
     Serial.println(sensorValues);

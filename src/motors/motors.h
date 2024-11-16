@@ -1,4 +1,4 @@
 namespace motors {
   void setup();
-  void TODO_motors();
+  void move(char motor, char direction);
 }

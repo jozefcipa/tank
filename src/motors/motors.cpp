@@ -1,54 +1,71 @@
 #include <Arduino.h>
 
 namespace motors {
-  // const int leftA=A0;
-  // const int leftB=A1;
-
-  const int rightA=A2;
-  const int rightB=A3;
-
-  const int LED = 13;
+  const int rightA = A3;
+  const int rightB = A2;
+  const int leftA = A1;
+  const int leftB = A0;
 
   void setup() {
-    // put your setup code here, to run once:
-    // pinMode(leftA, OUTPUT);
-    // pinMode(leftB, OUTPUT);
+    pinMode(leftA, OUTPUT);
+    pinMode(leftB, OUTPUT);
     pinMode(rightA, OUTPUT);
     pinMode(rightB, OUTPUT);
 
-    pinMode(LED, OUTPUT);
-
-    Serial.print("Motors configured.");
+    Serial.println("Motors configured.");
   }
   
-  void TODO_motors() {
+  void move(char motor, char direction) {
+    Serial.println("going");
+    digitalWrite(leftA, HIGH);
+    digitalWrite(leftB, LOW);
+    digitalWrite(rightA, HIGH);
+    digitalWrite(rightB, LOW);
+        Serial.println("wait");
+
+    delay(2000);
+
+        Serial.println("stopping");
+
+    digitalWrite(leftA, LOW);
+    digitalWrite(leftB, LOW);
+    digitalWrite(rightA, LOW);
+    digitalWrite(rightB, LOW);
+        Serial.println("wait");
+
+    delay(2000);
+
+    // int motorA;
+    // int motorB;
     
-    // blink
-    digitalWrite(LED, HIGH);
-    delay(500);
-    digitalWrite(LED, LOW);
+    // if (motor == 'L') {
+    //   motorA = leftA;
+    //   motorB = leftB;
+    // } else if (motor == 'R') {
+    //   motorA = rightA;
+    //   motorB = rightB;
+    // } else {
+    //   Serial.println("[motors]: Unknown motor: " + motor);
+    //   return;
+    // }
 
-    // turn
-    // digitalWrite(leftA,LOW);
-    // digitalWrite(leftB,HIGH);
-    digitalWrite(rightA,LOW);
-    digitalWrite(rightB,HIGH);
-
-    // wait
-    delay(500);
+    // if (direction == 'F') {
+    //   // forward
+    //   digitalWrite(motorA, LOW);
+    //   digitalWrite(motorB, HIGH);
+    // } else if (direction == 'B') {
+    //   // backward
+    //   digitalWrite(motorA, HIGH);
+    //   digitalWrite(motorB, LOW);
+    // }
     
-    // blink
-    digitalWrite(LED, HIGH);
-    delay(500);
-    digitalWrite(LED, LOW);
+    // // run for 100ms
+    // delay(100);
 
-    // turn
-    // digitalWrite(leftA,HIGH);
-    // digitalWrite(leftB,LOW);
-    digitalWrite(rightA,HIGH);
-    digitalWrite(rightB,LOW);
+    // // TODO: how to make it run continuously?
 
-    // wait
-    delay(500);
+    // // stop motor
+    // digitalWrite(motorA, LOW);
+    // digitalWrite(motorB, LOW);
   }
 }
