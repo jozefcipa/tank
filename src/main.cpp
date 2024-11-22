@@ -22,7 +22,6 @@ void setup() {
   // Setup peripheries
   led::setup();
   sonar::setup();
-  motors::setup();
 
   // Initialize I2C communication
   Wire.begin();

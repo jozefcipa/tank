@@ -1,4 +1,5 @@
 namespace motors {
-  void setup();
-  void move(char motor, char direction);
+  extern boolean motorsRunning;
+  void drive(char motorId, char direction);
+  void stop(char motorId);
 }

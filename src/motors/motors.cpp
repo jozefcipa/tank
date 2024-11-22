@@ -1,71 +1,73 @@
 #include <Arduino.h>
+// https://learn.sparkfun.com/tutorials/tb6612fng-hookup-guide/all
+#include <SparkFun_TB6612.h>
 
 namespace motors {
-  const int rightA = A3;
-  const int rightB = A2;
-  const int leftA = A1;
-  const int leftB = A0;
+  // Right motor
+  const int AIN1 = 2;
+  const int AIN2 = 3;
+  const int PWMA = 4;
+  // Left motor
+  const int BIN1 = 5;
+  const int BIN2 = 6;
+  const int PWMB = 7;
+  const int STBY = 8;
+  const int offsetA = 1;
+  // this motor has swapped wires (and I was lazy to fix them),
+  // so we can use -1 to reverse direction
+  const int offsetB = -1;
+  const int SPEED = 50; // PWM value 1-255
 
-  void setup() {
-    pinMode(leftA, OUTPUT);
-    pinMode(leftB, OUTPUT);
-    pinMode(rightA, OUTPUT);
-    pinMode(rightB, OUTPUT);
+  Motor rightMotor = Motor(AIN1, AIN2, PWMA, offsetA, STBY);
+  Motor leftMotor = Motor(BIN1, BIN2, PWMB, offsetB, STBY);
 
-    Serial.println("Motors configured.");
+  bool motorsRunning = false;
+
+  Motor* getMotor(char motorId) {
+    switch (motorId) {
+      case 'R': return &rightMotor;
+      case 'L': return &leftMotor;
+      default:
+        Serial.println("[motors]: Unknown motor: " + motorId);
+        return NULL;
+    }
+  }
+
+  void stop(char motorId) {
+    Motor* motor = getMotor(motorId);
+    
+    if (motor == NULL) {
+      return;
+    }
+
+    motor->brake();
+
+    // TODO: this is not good as we control both motors separately, should have two variables, one for each
+    motorsRunning = false;
   }
   
-  void move(char motor, char direction) {
-    Serial.println("going");
-    digitalWrite(leftA, HIGH);
-    digitalWrite(leftB, LOW);
-    digitalWrite(rightA, HIGH);
-    digitalWrite(rightB, LOW);
-        Serial.println("wait");
-
-    delay(2000);
-
-        Serial.println("stopping");
-
-    digitalWrite(leftA, LOW);
-    digitalWrite(leftB, LOW);
-    digitalWrite(rightA, LOW);
-    digitalWrite(rightB, LOW);
-        Serial.println("wait");
-
-    delay(2000);
-
-    // int motorA;
-    // int motorB;
+  void drive(char motorId, char direction) {
+    Motor* motor = getMotor(motorId);
     
-    // if (motor == 'L') {
-    //   motorA = leftA;
-    //   motorB = leftB;
-    // } else if (motor == 'R') {
-    //   motorA = rightA;
-    //   motorB = rightB;
-    // } else {
-    //   Serial.println("[motors]: Unknown motor: " + motor);
-    //   return;
-    // }
+    if (motor == NULL) {
+      return;
+    }
 
-    // if (direction == 'F') {
-    //   // forward
-    //   digitalWrite(motorA, LOW);
-    //   digitalWrite(motorB, HIGH);
-    // } else if (direction == 'B') {
-    //   // backward
-    //   digitalWrite(motorA, HIGH);
-    //   digitalWrite(motorB, LOW);
-    // }
-    
-    // // run for 100ms
-    // delay(100);
+    // First stop the motor 
+    stop(motorId);
 
-    // // TODO: how to make it run continuously?
+    switch (direction) {
+      case 'F':
+        motor->drive(SPEED);
+        break;
+      case 'B':
+        motor->drive(-SPEED);
+        break;
+      default:
+        Serial.println("[motors]: Unknown direction: " + direction);
+        return;
+    }
 
-    // // stop motor
-    // digitalWrite(motorA, LOW);
-    // digitalWrite(motorB, LOW);
+    motorsRunning = true;
   }
 }
