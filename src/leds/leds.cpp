@@ -2,9 +2,9 @@
 #include <stdbool.h>
 
 namespace led {
-  const int STATUS_LED = 9;
-  const int FRONT_LED = 40;
-  const int REAR_LED = 41;
+  const int STATUS_LED = 52;
+  const int FRONT_LED = 50;
+  const int REAR_LED = 48;
   bool lightsTurnedOn = false;
 
   void turnOnLights() {

@@ -2,8 +2,8 @@
 #include <SoftwareSerial.h>
 
 namespace bluetooth {
-  const int BLUETOOTH_RX = 10;
-  const int BLUETOOTH_TX = 11;
+  const int BLUETOOTH_RX = 13;
+  const int BLUETOOTH_TX = 12;
   SoftwareSerial btClient(BLUETOOTH_RX, BLUETOOTH_TX);
 
   void setup() {

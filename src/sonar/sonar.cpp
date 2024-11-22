@@ -2,8 +2,8 @@
 // https://howtomechatronics.com/tutorials/arduino/ultrasonic-sensor-hc-sr04/
 #include <Arduino.h>
 namespace sonar {
-  const int SONAR_TRIGGER_PIN = 33;
-  const int SONAR_ECHO_PIN = 32;
+  const int SONAR_TRIGGER_PIN = 32;
+  const int SONAR_ECHO_PIN = 30;
 
   void setup() {
     pinMode(SONAR_TRIGGER_PIN, OUTPUT);

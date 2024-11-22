@@ -31,8 +31,8 @@ Distance measuring is possible thanks to the [HC-SR04](https://www.laskakit.cz/a
 
 | HC-SR04 sonar | Arduino |
 | -------- | ------- |
-| Trigger        | 33        |
-| Echo           | 32        |
+| Trigger        | D32        |
+| Echo           | D30        |
 | GND            | GND       |
 | VCC            | 5V        |
 
@@ -43,9 +43,9 @@ For direction detection the robot uses the [HMC5883L](https://www.laskakit.cz/3-
 
 | HMC5883L compass | Arduino |
 | -------- | ------- |
-| SCL              | SCL            |
-| SDA              | SDA            |
-| GND              | GND            |
+| SCL              | SCL           |
+| SDA              | SDA           |
+| GND              | GND           |
 | VCC              | 5V            |
 
 ### Thermometer
@@ -57,21 +57,22 @@ Measuring temperature and humidity is handled by the [SHT-40](https://www.laskak
 | SCL          | SCL            |
 | SDA          | SDA            |
 | GND          | GND            |
-| VCC          | 3.3V            |
+| VCC          | 3.3V           |
 
 ### Motors
 
-This robot uses two DC motors that are integrated into the [tank chassis](https://www.laskakit.cz/roboticky-podvozek-pasovy-plastovy/) and uses the [L9110s](https://www.laskakit.cz/h-mustek-radic-l9110s/) motor driver for controlling them.
+This robot uses two DC motors that are integrated into the [tank chassis](https://www.laskakit.cz/roboticky-podvozek-pasovy-plastovy/) and uses the [TB6612FNG](https://www.laskakit.cz/dvoumotorovy-radic-tb6612fng/)  driver for controlling the motors.
 
-| L9110S motors controller | Arduino |
+| TB6612FNG motors driver | Arduino |
 | ----------------- | ------- |
-| Right motor pin A                  | A15           |
-| Right motor pin B                  | A14           |
-| Left motor pin A                   | A13           |
-| Left motor pin B                   | A12           |
-| GND                                | GND           |
-| VCC                                | 5V            |
-
+| AIN1              | D2      |
+| AIN2              | D3      |
+| PWMA              | D4      |
+| BIN1              | D6      |
+| PWMB              | D7      |
+| STBY              | D8      |
+| GND               | GND     |
+| VCC               | 5V      |
 
 ## Bluetooth
 
@@ -79,8 +80,8 @@ This tank uses the [HM-10](https://www.laskakit.cz/huamao-hm-10c-a-orig--bluetoo
 
 | HM-10 Bluetooth | Arduino                                             | Notes |
 | --------- | ------- | --------------------------------------------------- |
-| RX                 | D10            | Connected via a voltage divider. See the diagram below. |
-| TX                 | D11            |  |
+| RX                 | D13            | Connected via a voltage divider. See the diagram below. |
+| TX                 | D12            |  |
 | STATE              | -              | Connected to the blue LED through a 220R resistor |
 | VCC                | 3.3V           |  |
 | GND                | GND            |  |
@@ -105,7 +106,7 @@ Once the program is loaded and everything is initialized, the green LED (STATUS)
 
 | LED     | Arduino   | Notes |
 | --------- | ------- | --------------------------------------------------- |
-| STATUS    | D9      | Through a 330R resistor |
-| FRONT     | D40     | Through a 330R resistor |
-| REAR      | D41     | Through a 330R resistor |
+| STATUS    | D52      | Through a 330R resistor |
+| FRONT     | D50     | Through a 330R resistor |
+| REAR      | D48     | Through a 330R resistor |
 | BLUETOOTH | -       | Connected to the BT module, through a 220R resistor  |
