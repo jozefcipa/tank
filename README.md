@@ -22,8 +22,7 @@ Once the connection is established, you can read sensor values from the board an
 This tank is equipped with several sensors to measure the surrounding environment.
 Here's the block diagram of the whole board.
 
-<!-- TODO: Replace with a better photo -->
-<img src="./assets/diagram.png">
+<img src="./assets/tank-schematic.png">
 
 ### Sonar
 
