@@ -87,14 +87,7 @@ This tank uses the [HM-10](https://www.laskakit.cz/huamao-hm-10c-a-orig--bluetoo
 
 
 When connecting with Arduino, we need to add a voltage divider between RX pin of the bluetooth module and TX pin of the Arduino board, as they are working on different voltage levels (5V vs. 3.3V).
-The electric circuit can be seen on the diagram below.
-
-
-<img src="./assets/bluetooth.png">
-
-<small>
-  Diagram from <a href="https://www.martyncurrey.com/hm-10-bluetooth-4ble-modules/" target="_blank">martyncurrey.com</a>
-</small>
+The electric circuit can be seen on the diagram above.
 
 ## LEDs
 
