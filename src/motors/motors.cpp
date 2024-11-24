@@ -21,8 +21,6 @@ namespace motors {
   Motor rightMotor = Motor(AIN1, AIN2, PWMA, offsetA, STBY);
   Motor leftMotor = Motor(BIN1, BIN2, PWMB, offsetB, STBY);
 
-  bool motorsRunning = false;
-
   Motor* getMotor(char motorId) {
     switch (motorId) {
       case 'R': return &rightMotor;
@@ -41,9 +39,6 @@ namespace motors {
     }
 
     motor->brake();
-
-    // TODO: this is not good as we control both motors separately, should have two variables, one for each
-    motorsRunning = false;
   }
   
   void drive(char motorId, char direction) {
@@ -67,7 +62,5 @@ namespace motors {
         Serial.println("[motors]: Unknown direction: " + direction);
         return;
     }
-
-    motorsRunning = true;
   }
 }
