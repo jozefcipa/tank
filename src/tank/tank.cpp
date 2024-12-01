@@ -74,8 +74,7 @@ namespace tank {
     }
 
     // move motors, cmdVal format is e.g. "LF:RF"
-    motors::drive(cmdVal[0], cmdVal[1]);
-    motors::drive(cmdVal[3], cmdVal[4]);
+    motors::drive(cmdVal[0], cmdVal[1], cmdVal[3], cmdVal[4]);
     motorsRunning = true;
 
     // reset timer
